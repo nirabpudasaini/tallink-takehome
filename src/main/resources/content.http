@@ -1,0 +1,82 @@
+###
+POST http://localhost:8080/api/backoffice/rooms
+Content-Type: application/json
+
+{
+  "name": "Sadama Room",
+  "address": "Uss Sadama , 12",
+  "capacity": 100,
+  "status": "TEMPORARILY_UNAVAILABLE"
+}
+
+###
+
+###
+
+POST http://localhost:8080/api/backoffice/conferences
+Content-Type: application/json
+
+{
+  "roomId": 3,
+  "startDateTime": "2024-10-07T14:30:00.000Z",
+  "endDateTime": "2024-10-07T15:30:00.000Z"
+}
+
+###
+
+###
+POST http://localhost:8080/api/backoffice/conferences
+Content-Type: application/json
+
+{
+  "roomId": 3,
+  "startDateTime": "2024-10-09T14:30:00.000Z",
+  "endDateTime": "2024-10-09T15:30:00.000Z"
+}
+###
+
+###
+DELETE http://localhost:8080/api/backoffice/conferences/2
+###
+
+###
+GET http://localhost:8080/api/backoffice/conferences/available/1
+###
+
+###
+PUT http://localhost:8080/api/backoffice/conferences/1
+Content-Type: application/json
+
+{
+  "roomId": 3,
+  "startDateTime": "2024-10-09T14:35:00.000Z",
+  "endDateTime": "2024-10-09T15:45:00.000Z"
+}
+###
+
+GET http://localhost:8080/api/conference
+Content-Type: application/json
+
+{
+    "startDateTime": "2024-01-01T14:35:00.000Z",
+    "endDateTime": "2024-12-30T14:35:00.000Z"
+}
+###
+
+###
+
+POST http://localhost:8080/api/conference/registration
+Content-Type: application/json
+
+{
+  "conferenceId": 1,
+  "participantFname": "Anton",
+  "participantLname": "Tsenno",
+  "gender": "Male"
+}
+
+###
+
+
+
+
