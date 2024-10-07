@@ -1,12 +1,16 @@
 package com.nirab.conference.controller;
 
+import com.nirab.conference.dto.ConferenceDetailsDto;
 import com.nirab.conference.dto.ConferenceDto;
+import com.nirab.conference.dto.DateRangeDto;
 import com.nirab.conference.model.Conference;
 import com.nirab.conference.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -40,5 +44,11 @@ public class ConferenceController {
     public ResponseEntity<ConferenceDto> updateConference(@PathVariable Long conferenceId, @RequestBody ConferenceDto dto) {
         Conference conference = conferenceService.updateConference(conferenceId, dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("/conference")
+    public ResponseEntity<List<ConferenceDetailsDto>> findAvailableConferences(@RequestBody DateRangeDto dto){
+        List<ConferenceDetailsDto> conferences = conferenceService.findAvailableConferences(dto.getStartDateTime(), dto.getEndDateTime());
+        return new ResponseEntity<>(conferences, HttpStatus.OK);
     }
 }

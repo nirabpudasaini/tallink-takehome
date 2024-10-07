@@ -1,5 +1,6 @@
 package com.nirab.conference.service;
 
+import com.nirab.conference.dto.ConferenceDetailsDto;
 import com.nirab.conference.dto.ConferenceDto;
 import com.nirab.conference.model.Conference;
 import com.nirab.conference.model.Room;
@@ -7,6 +8,7 @@ import com.nirab.conference.model.RoomStatus;
 import com.nirab.conference.repository.ConferenceRepository;
 import com.nirab.conference.repository.RegistrationRepository;
 import com.nirab.conference.repository.RoomRepository;
+import com.nirab.conference.utils.EntityDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ConferenceService {
@@ -26,6 +29,9 @@ public class ConferenceService {
 
     @Autowired
     private RegistrationRepository registrationRepository;
+
+    @Autowired
+    private EntityDtoMapper entityDtoMapper;
 
     public Conference createConference(ConferenceDto dto) {
         Room room = roomRepository.findById(dto.getRoomId())
@@ -87,5 +93,12 @@ public class ConferenceService {
         conference.setStartDateTime(dto.getStartDateTime());
         conference.setEndDateTime(dto.getEndDateTime());
         return conferenceRepository.save(conference);
+    }
+
+    public List<ConferenceDetailsDto> findAvailableConferences(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return conferenceRepository.findByStartDateTimeBetween(startDateTime, endDateTime)
+                .stream()
+                .map(entityDtoMapper::toConferenceDetailsDto)
+                .collect(Collectors.toList());
     }
 }
