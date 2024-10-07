@@ -15,6 +15,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface EntityDtoMapper {
+    Room toRoom(RoomDto roomDto);
+    RoomDto toRoomDto(Room room);
     List<RoomDto> toRoomDtos(List<Room> rooms);
 
     List<FeedbackDto> toFeedbackDtos(List<Feedback> feedbacks);
