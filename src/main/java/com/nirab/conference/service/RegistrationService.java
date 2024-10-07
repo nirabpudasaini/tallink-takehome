@@ -39,4 +39,10 @@ public class RegistrationService {
 
         return entityDtoMapper.toRegistrationDto(registrationRepository.save(registration));
     }
+
+    public void cancelRegistration(String uniqueCode) {
+        Registration registration = registrationRepository.findByUniqueCode(uniqueCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Registration not found"));
+        registrationRepository.delete(registration);
+    }
 }
